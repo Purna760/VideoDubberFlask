@@ -76,6 +76,13 @@ A Flask-based web application that automatically translates and dubs videos into
 - Development server runs on port 5000
 - For production deployment, use a WSGI server like Gunicorn
 
+## Render Deployment
+- `render.yaml` configured for blueprint deployment
+- Build command includes FFmpeg installation
+- Health check endpoint at `/health`
+- Gunicorn configured with 2 workers and 600s timeout for long video processing
+- See `DEPLOYMENT.md` for detailed step-by-step instructions
+
 ## User Preferences
 - Clean, modern UI with gradient backgrounds
 - Real-time progress tracking preferred
