@@ -35,7 +35,7 @@ class VideoProcessor:
         
         model = WhisperModel("small", device="cpu", compute_type="int8")
         segments, info = model.transcribe(audio_path)
-        language = info[0]
+        language = info.language
         segments = list(segments)
         
         print(f"Detected language: {language}")
@@ -78,11 +78,13 @@ class VideoProcessor:
         
         translator = Translator(to_lang=to_lang, from_lang=from_lang)
         
-        for sub in subs:
+        for i, sub in enumerate(subs):
             try:
                 sub.text = translator.translate(sub.text)
+                if i % 10 == 0:
+                    self.update_progress(50 + (i / len(subs)) * 10, f'Translating {i+1}/{len(subs)}...')
             except Exception as e:
-                print(f"Translation error for segment: {e}")
+                print(f"Translation error for segment {i}: {e}, keeping original text")
         
         subs.save(translated_file, encoding='utf-8')
         return translated_file
