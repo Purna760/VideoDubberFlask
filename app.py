@@ -18,6 +18,7 @@ os.makedirs(app.config['OUTPUT_FOLDER'], exist_ok=True)
 jobs = {}
 
 SUPPORTED_LANGUAGES = {
+    'en': 'English',
     'es': 'Spanish',
     'fr': 'French',
     'de': 'German',
@@ -48,7 +49,8 @@ def upload_video():
         return jsonify({'error': 'No video file provided'}), 400
     
     video = request.files['video']
-    target_lang = request.form.get('target_language', 'es')
+    source_lang = request.form.get('source_language', 'en')
+    target_lang = request.form.get('target_language', 'hi')
     
     if video.filename == '':
         return jsonify({'error': 'No file selected'}), 400
@@ -67,20 +69,21 @@ def upload_video():
         'step': 'Initializing...',
         'input_file': input_path,
         'output_file': None,
+        'source_language': source_lang,
         'target_language': target_lang,
         'error': None
     }
     
-    thread = threading.Thread(target=process_video_async, args=(job_id, input_path, target_lang))
+    thread = threading.Thread(target=process_video_async, args=(job_id, input_path, source_lang, target_lang))
     thread.daemon = True
     thread.start()
     
     return jsonify({'job_id': job_id})
 
-def process_video_async(job_id, input_path, target_lang):
+def process_video_async(job_id, input_path, source_lang, target_lang):
     try:
         processor = VideoProcessor(job_id, jobs)
-        output_path = processor.process(input_path, target_lang)
+        output_path = processor.process(input_path, source_lang, target_lang)
         
         jobs[job_id]['status'] = 'completed'
         jobs[job_id]['progress'] = 100

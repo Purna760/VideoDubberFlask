@@ -18,13 +18,23 @@
             <div class="card-body p-5">
                 <h3 class="card-title mb-4">Upload Your Video</h3>
                 
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Select Target Language</label>
-                    <select id="target-language" class="form-select form-select-lg">
-                        {% for code, name in languages.items() %}
-                        <option value="{{ code }}">{{ name }}</option>
-                        {% endfor %}
-                    </select>
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <label class="form-label fw-bold">Source Language</label>
+                        <select id="source-language" class="form-select form-select-lg">
+                            {% for code, name in languages.items() %}
+                            <option value="{{ code }}" {% if code == 'en' %}selected{% endif %}>{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Target Language</label>
+                        <select id="target-language" class="form-select form-select-lg">
+                            {% for code, name in languages.items() %}
+                            <option value="{{ code }}" {% if code == 'hi' %}selected{% endif %}>{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
 
                 <div class="upload-area" id="drop-zone">

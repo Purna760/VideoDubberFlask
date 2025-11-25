@@ -4,16 +4,20 @@
 A Flask-based web application that automatically translates and dubs videos into multiple languages. Users can upload a video, select a target language, and the app will extract audio, transcribe it, translate the text, generate dubbed audio using text-to-speech, and merge it back with the video.
 
 ## Recent Changes
-- **November 25, 2025**: Initial project setup
+- **November 25, 2025**: Initial project setup and enhancements
   - Created Flask web application with video upload functionality
   - Implemented automated video dubbing pipeline with Whisper transcription
-  - Added support for 15+ target languages (Spanish, French, German, Hindi, Tamil, Arabic, Japanese, Korean, Chinese, Portuguese, Italian, Russian, Dutch, Turkish, Polish)
+  - Added support for 16 languages including English (English, Spanish, French, German, Hindi, Tamil, Arabic, Japanese, Korean, Chinese, Portuguese, Italian, Russian, Dutch, Turkish, Polish)
+  - Implemented source and target language selection with defaults (English → Hindi)
   - Built responsive UI with drag-and-drop upload and real-time progress tracking
+  - Fixed critical transcription bug (info.language instead of info[0])
+  - Enhanced error handling for translation and TTS operations
   - Configured for deployment on Render
 
 ## Features
 - **Video Upload**: Drag-and-drop interface supporting MP4, AVI, MOV, MKV formats (up to 500MB)
-- **Multi-language Support**: Translate and dub videos into 15+ languages
+- **Source & Target Language Selection**: Choose both source and target languages with defaults (English → Hindi)
+- **Multi-language Support**: Translate and dub videos into 16 languages
 - **Automated Pipeline**:
   1. Extract audio from video using FFmpeg
   2. Transcribe audio using Faster Whisper AI model

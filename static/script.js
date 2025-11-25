@@ -70,10 +70,12 @@ uploadBtn.addEventListener('click', async () => {
         return;
     }
     
+    const sourceLanguage = document.getElementById('source-language').value;
     const targetLanguage = document.getElementById('target-language').value;
     
     const formData = new FormData();
     formData.append('video', selectedFile);
+    formData.append('source_language', sourceLanguage);
     formData.append('target_language', targetLanguage);
     
     uploadBtn.disabled = true;

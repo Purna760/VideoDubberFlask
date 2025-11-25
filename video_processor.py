@@ -155,17 +155,19 @@ class VideoProcessor:
         except Exception as e:
             print(f"Error cleaning up temp files: {e}")
     
-    def process(self, input_video_path, target_language):
+    def process(self, input_video_path, source_language, target_language):
         try:
             audio_path = self.extract_audio(input_video_path)
             
-            language, segments = self.transcribe(audio_path)
+            detected_language, segments = self.transcribe(audio_path)
             
-            subtitle_file = self.generate_subtitle_file(language, segments)
+            subtitle_file = self.generate_subtitle_file(detected_language, segments)
+            
+            from_lang = source_language if source_language else detected_language
             
             translated_subtitle_file = self.translate_subtitles(
                 subtitle_file, 
-                language, 
+                from_lang, 
                 target_language
             )
             
